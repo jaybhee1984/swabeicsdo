@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ✅ Admin check function
+    function isAdmin() {
+      return request.auth != null &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ✅ USERS COLLECTION
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if isAdmin();
+    }
+
+    // ✅ ADMINS COLLECTION
+    match /admins/{adminId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // ✅ SERVICE RECORDS
+    match /service_records_data/{recordId} {
+      allow read, write: if isAdmin();
+      allow read: if request.auth != null &&
+                   get(/databases/$(database)/documents/users/$(request.auth.uid)).data.employee_number == recordId;
+    }
+
+    // ✅ PDS FILES
+    match /pds_files/{employeeNumber} {
+      allow read: if request.auth != null;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ✅ PDS METADATA
+    match /pds_metadata/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // ✅ PDS UPDATES (Excel Upload Tracking)
+    match /pds_updates/{empNo} {
+      allow read, write: if request.auth != null &&
+                         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.employee_number == empNo;
+    }
+  }
+}

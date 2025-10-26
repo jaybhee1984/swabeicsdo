@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "552137708069",
+    "firebase_url": "https://swabeicsdo-9014f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "swabeicsdo-9014f",
+    "storage_bucket": "swabeicsdo-9014f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552137708069:android:1930724e5be1ea0cc3a5cc",
+        "android_client_info": {
+          "package_name": "com.example.swabe_desktop_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDojU3-9ZIvzFaP6Q3syR4ZEsMcxfNImok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552137708069:android:cd896e7e167f6db2c3a5cc",
+        "android_client_info": {
+          "package_name": "com.example.swabeadmindashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDojU3-9ZIvzFaP6Q3syR4ZEsMcxfNImok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552137708069:android:e5f50b59edc6189cc3a5cc",
+        "android_client_info": {
+          "package_name": "com.example.swabeicsdo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDojU3-9ZIvzFaP6Q3syR4ZEsMcxfNImok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
