@@ -10,12 +10,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: subosito/flutter-action@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
       with:
-        flutter-version: '3.35.7' # Your Flutter version
-    - run: flutter pub get
-    - run: flutter build apk --release
-    - uses: actions/upload-artifact@v3
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.4' # Use a valid Flutter version
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build APK
+      run: flutter build apk --release
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
       with:
         name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
