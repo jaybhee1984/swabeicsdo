@@ -1,9 +1,9 @@
-name: Build Flutter APK
+name: Build Flutter APK and AAB
 
 on:
   push:
-    branches: [main]   # Runs automatically when you push to main
-  workflow_dispatch:    # Allows manual trigger from GitHub Actions UI
+    branches: [main]   # Auto-trigger on push to main
+  workflow_dispatch:    # Manual trigger from GitHub Actions UI
 
 jobs:
   build:
@@ -22,14 +22,36 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.24.4' # Use a valid Flutter version
+
+    - name: Install Android SDK
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget tar unzip
+        wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+        mkdir -p $HOME/android-sdk/cmdline-tools
+        unzip commandlinetools-linux-9477386_latest.zip -d $HOME/android-sdk/cmdline-tools
+        export ANDROID_HOME=$HOME/android-sdk
+        export PATH=$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$PATH
+        yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --licenses
+        $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
     - name: Install dependencies
       run: flutter pub get
 
     - name: Build APK
       run: flutter build apk --release
 
+    - name: Build AAB
+      run: flutter build appbundle --release
+
     - name: Upload APK
       uses: actions/upload-artifact@v3
       with:
         name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
+
+    - name: Upload AAB
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-aab
+        path: build/app/outputs/bundle/release/app-release.aab
