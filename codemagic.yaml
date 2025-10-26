@@ -1,17 +1,14 @@
 workflows:
-  android-release:
-    name: Android Release Build
+  ios-release:
+    name: iOS Release Build
     max_build_duration: 60
     environment:
       flutter: stable
-      java: 17
+      xcode: latest
     scripts:
       - name: Install dependencies
         script: flutter pub get
-      - name: Build APK
-        script: flutter build apk --release
-      - name: Build AAB
-        script: flutter build appbundle --release
+      - name: Build IPA
+        script: flutter build ipa --release
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
-      - build/app/outputs/bundle/release/app-release.aab
+      - build/ios/ipa/*.ipa
